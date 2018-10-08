@@ -1,0 +1,11 @@
+-- File Dialog Example
+#noedit
+#system win32
+#model clarion dll
+#pragma debug(vid=>full)
+#pragma optimize(cpu=>386)
+#pragma define(_SALinkMode_=>1)
+#pragma define(_SADLLMode_=>0)
+#compile "FileDlgs.clw"
+#pragma link("filedlgs.exe.manifest")
+#link "FileDlgs.exe"
