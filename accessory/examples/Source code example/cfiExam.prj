@@ -1,0 +1,16 @@
+-- Clarion FreeImage Example Project
+#noedit
+#system win32
+#model clarion dll
+#set RELEASE = on
+#pragma debug(vid=>off)
+#pragma optimize(cpu=>386)
+#pragma define(_FreeImageLinkMode_=>1)
+#pragma define(_FreeImageDLLMode_=>0)
+#pragma define(_SALinkMode_=>1)
+#pragma define(_SADLLMode_=>0)
+#compile "cfiExam.clw"
+#pragma link("C%V%TPS%X%%L%.LIB")
+#pragma link("cfiExam.Manifest")
+#pragma link("FreeImage.lib")
+#link "cfiExam.exe"

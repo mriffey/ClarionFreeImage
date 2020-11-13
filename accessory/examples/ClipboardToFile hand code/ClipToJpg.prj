@@ -1,0 +1,13 @@
+-- Clarion FreeImage Clipboard to JPG example
+#noedit
+#system win32
+#model clarion dll
+#pragma debug(vid=>full)
+#pragma optimize(cpu=>386)
+#pragma define(_FreeImageDllMode_=>0)
+#pragma define(_FreeImageLinkMode_=>1)
+#pragma define(_SADllMode_=>0)
+#pragma define(_SALinkMode_=>1)
+#compile "ClipToJp.clw"
+#pragma link("FreeImage.lib")
+#link "ClipToJp.exe"

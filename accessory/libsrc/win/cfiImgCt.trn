@@ -1,0 +1,170 @@
+!
+! English Window structures for the Clarion FreeImage Control's dialogs.
+! This file is used by cfiDlgs.clw.
+!
+!
+!============================================================
+! cfiImgCt.trn -- Clarion FreeImage Control translation file
+!
+!  Copyright © 2005 Sand & Associates, Larry@sand-associates.com
+!
+!  This software is provided 'as-is', without any express or implied
+!  warranty.  In no event will the authors be held liable for any damages
+!  arising from the use of this software.
+!
+!  Permission is granted to anyone to use this software for any purpose,
+!  including commercial applications, and to alter it and redistribute it
+!  freely, subject to the following restrictions:
+!
+!  1. The origin of this software must not be misrepresented; you must not
+!     claim that you wrote the original software. If you use this software
+!     in a product, an acknowledgment in the product documentation would be
+!     appreciated but is not required.
+!
+!  2. Altered source versions must be plainly marked as such, and must not be
+!     misrepresented as being the original software.
+!
+!  3. This notice may not be removed or altered from any source distribution.
+!
+!============================================================
+!-------------------------------------------------------------------------------------
+  Section('cfiRescaleDialogWindow')
+
+Window WINDOW('Rescale'),AT(,,187,182),FONT('MS Sans Serif',8,,),SYSTEM,GRAY
+       OPTION,AT(3,2,179,86),USE(RescaleDimType)
+         RADIO('&Pixels'),AT(17,5),USE(?RescaleDimType:Pixels),TRN
+         RADIO('Per&centage of original'),AT(16,43),USE(?RescaleDimType:Percent),TRN
+       END
+       GROUP,AT(3,11,179,27),USE(?PixelSizeGroup),BOXED
+         PROMPT('Width:'),AT(11,21),USE(?PixelWidthPrompt)
+         SPIN(@n8),AT(36,20,43,12),USE(PixelWidth),RIGHT(2),RANGE(0,64000),STEP(1)
+         PROMPT('Height:'),AT(96,21),USE(?PixelHeightPrompt)
+         SPIN(@n8),AT(130,20,43,12),USE(PixelHeight),RIGHT(2),RANGE(0,64000),STEP(1)
+       END
+       GROUP,AT(3,51,179,28),USE(?PercentSizeGroup),DISABLE,BOXED
+         PROMPT('Width:'),AT(11,60),USE(?PercentWidthPrompt)
+         SPIN(@n8),AT(36,60,43,12),USE(PercentWidth),RIGHT(2),RANGE(0,64000),STEP(1)
+         PROMPT('Height:'),AT(96,60),USE(?PercentHeightPrompt)
+         SPIN(@n8),AT(130,60,43,12),USE(PercentHeight),RIGHT(2),RANGE(0,64000),STEP(1)
+       END
+       LIST,AT(98,95,77,12),USE(ResamplingFilter),DROP(10),FROM('Box|#0|Bicubic|#1|Bilinear|#2|Cubic B-Spline|#3|Catmull-Rom|#4|Lanczos3|#5')
+       CHECK('Maintain aspect ratio'),AT(15,117),USE(bMaintainAspectRatio)
+       PROMPT('&Resampling filter:'),AT(15,96),USE(?ResamplingFilterPrompt)
+       BUTTON('Apply'),AT(37,164,45,14),USE(?ApplyButton)
+       BUTTON('Ok'),AT(137,164,45,14),USE(?OkButton)
+       BUTTON('Cancel'),AT(87,164,45,14),USE(?CancelButton)
+     END
+
+
+
+!-------------------------------------------------------------------------------------
+  Section('cfiBrightContrastDialogWindow')
+
+Window WINDOW('Adjust Brightness and Contrast'),AT(,,187,182),FONT('MS Sans Serif',8,,),SYSTEM,GRAY
+       REGION,AT(5,5,176,130),USE(?ImageControl)
+       PROMPT('Brightness'),AT(6,144),USE(?BrightnessPrompt)
+       SPIN(@n-5.1),AT(48,141,42,14),USE(NewBrightness),RIGHT(4),RANGE(-100,100),STEP(0.5)
+       SPIN(@n-5.1),AT(133,141,42,14),USE(NewContrast),RIGHT(4),RANGE(-100,100),STEP(0.5)
+       PROMPT('Contrast'),AT(103,143),USE(?ContrastPrompt)
+       BUTTON('Apply'),AT(37,164,45,14),USE(?ApplyButton)
+       BUTTON('Ok'),AT(137,164,45,14),USE(?OkButton)
+       BUTTON('Cancel'),AT(87,164,45,14),USE(?CancelButton)
+     END
+
+
+!-------------------------------------------------------------------------------------
+  Section('cfiGammaDialogWindow')
+
+Window WINDOW('Adjust Gamma'),AT(,,187,182),FONT('MS Sans Serif',8,,),SYSTEM,GRAY
+       REGION,AT(5,5,176,130),USE(?ImageControl)
+       PROMPT('Gamma'),AT(6,144),USE(?BrightnessPrompt)
+       SPIN(@n-6.2),AT(48,141,42,14),USE(NewGamma),RIGHT(4),RANGE(0.01,100),STEP(0.01)
+       BUTTON('Apply'),AT(37,164,45,14),USE(?ApplyButton)
+       BUTTON('Ok'),AT(137,164,45,14),USE(?OkButton)
+       BUTTON('Cancel'),AT(87,164,45,14),USE(?CancelButton)
+     END
+
+
+!-------------------------------------------------------------------------------------
+  Section('cfiRotateCenterDialogWindow')
+
+Window WINDOW('Rotate about center point'),AT(,,187,188),FONT('MS Sans Serif',8,,),SYSTEM,GRAY
+       REGION,AT(5,5,176,130),USE(?ImageControl)
+       PROMPT('Rotation Angle'),AT(6,144),USE(?RotateAnglePrompt)
+       SPIN(@n-6.1),AT(58,141,36,14),USE(NewAngle),RIGHT(2),RANGE(0,360),STEP(10)
+       OPTION,AT(99,135,83,32),USE(RotationDirection),BOXED
+         RADIO('Clockwise'),AT(103,142,75,10),USE(?DirectionOption:Clockwise)
+         RADIO('Counter Clockwise'),AT(103,153),USE(?DirectionOption:CCW)
+       END
+       BUTTON('Apply'),AT(37,170,45,14),USE(?ApplyButton)
+       BUTTON('Ok'),AT(137,170,45,14),USE(?OkButton)
+       BUTTON('Cancel'),AT(87,170,45,14),USE(?CancelButton)
+     END
+
+
+!-------------------------------------------------------------------------------------
+  Section('cfiRotateSkewDialogWindow')
+
+Window WINDOW('Rotate and Skew'),AT(,,273,198),FONT('MS Sans Serif',8,,),SYSTEM,GRAY
+       REGION,AT(5,5,176,130),USE(?ImageControl)
+       PROMPT('Rotation &Angle'),AT(6,144),USE(?RotateAnglePrompt)
+       GROUP('Rotation &Origin'),AT(189,5,73,54),USE(?OriginGroup),BOXED
+         PROMPT('&X:'),AT(203,22,12,10),USE(?XOriginPrompt)
+         SPIN(@n-6.1),AT(218,20,36,14),USE(xOrigin),RIGHT(2),STEP(10)
+         PROMPT('&Y:'),AT(203,42,11,10),USE(?YOriginPrompt)
+         SPIN(@n-6.1),AT(218,40,36,14),USE(yOrigin),RIGHT(2),STEP(10)
+       END
+       GROUP('&Shift'),AT(189,62,73,51),USE(?ShiftGroup),BOXED
+         PROMPT('&X:'),AT(203,79,12,10),USE(?XShiftPrompt)
+         SPIN(@n-6.1),AT(218,76,36,14),USE(xShift),RIGHT(2),STEP(10)
+         PROMPT('&Y:'),AT(203,97,12,10),USE(?YShiftPrompt)
+         SPIN(@n-6.1),AT(218,95,36,14),USE(yShift),RIGHT(2),STEP(10)
+       END
+       CHECK('Use black &mask'),AT(189,120),USE(bUseMask)
+       SPIN(@n-6.1),AT(58,141,36,14),USE(NewAngle),RIGHT(2),RANGE(0,360),STEP(10)
+       OPTION,AT(99,135,83,32),USE(RotationDirection),BOXED
+         RADIO('Clock&wise'),AT(103,142,75,10),USE(?DirectionOption:Clockwise)
+         RADIO('&Counter Clockwise'),AT(103,153),USE(?DirectionOption:CCW)
+       END
+       BUTTON('Apply'),AT(119,177,45,14),USE(?ApplyButton)
+       BUTTON('Ok'),AT(219,177,45,14),USE(?OkButton)
+       BUTTON('Preview'),AT(198,146,57,14),USE(?PreviewButton)
+       BUTTON('Cancel'),AT(169,177,45,14),USE(?CancelButton)
+     END
+
+
+!-------------------------------------------------------------------------------------
+  Section('cfiMetaDataDialogWindow')
+
+Window    WINDOW('Metadata'),AT(,,395,304),FONT('MS Sans Serif',8,,FONT:regular),SYSTEM,GRAY, |
+         RESIZE
+       GROUP('To get a single value do the following:'),AT(4,5,293,51),USE(?Group1),BOXED
+         PROMPT('1)  Select a model'),AT(10,19),USE(?SelectModelPrompt)
+         LIST,AT(10,36,80,10),USE(?MetadataModelList),IMM,FORMAT('66L(2)|M10L(2)|M'),DROP(10),FROM(MetadataModelQ)
+         PROMPT('2)  Type the name of the key. <10>    Note: This is case sensitive'),AT(95,16,106,18), |
+             USE(?KeyPrompt)
+         ENTRY(@s127),AT(106,36,75,10),USE(MetadataTag)
+         BUTTON('Get metadata'),AT(211,26,65,14),USE(?GetMetadataButton)
+       END
+       BUTTON('OK'),AT(345,31,45,14),USE(?OkButton)
+       LIST,AT(0,65),USE(?MetaDataQ),FULL,HVSCROLL,FORMAT('26L(2)|M~Model~110L(2)|M~Meta key~143L(2)|M~Description~65L(2)|M~Value~'), |
+           FROM(MetaDataQ)
+     END
+
+
+CFI_NOELEMENTSTR    Equate('This image does not contain any recognized metadata elements.')
+CFI_MSGTITLE        Equate('Clarion FreeImage Example')
+                   
+CFI_METACOMMENTS    Equate('Comments')
+CFI_METAEXIFTIFF    Equate('Exif - TIFF')
+CFI_METAEXIFEXIF    Equate('Exif - specific')
+CFI_METAEXIFGPS     Equate('Exif GPS')
+CFI_METAEXIFMAKER   Equate('Exif Maker note')
+CFI_METAEXIFINTER   Equate('Exif interoperability')
+CFI_METAIPCT        Equate('IPCT, NAA')
+CFI_METAADOBEXMP    Equate('Adobe XMP')
+CFI_METAGEOTIFF     Equate('GeoTIFF')
+CFI_METAANIMATION   Equate('Animation')
+CFI_METACUSTOM      Equate('Custom')
+
+
