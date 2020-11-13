@@ -32,7 +32,12 @@
 !             Add JPEGCrop(), JPEGTransform methods
 !             Remove protected attribute from GetDialogFilter()    
 !             Added ResizeCanvas methods to resize the image filling the background 
-!             with the specified color.  This is used to add a border to an image.
+!             with the specified color.  This is used to add a border to an image.  
+! 2018.12.20  Added RotateImageOnEXIFOrientation() method
+!============================================================    
+! 2020.4.13   Modified by Charles Edmonds
+!             Replaced deprecated call to FreeImage_RotateClassic with a call to FreeImage_Rotate
+!             Created new .LIB file from FreeImage 3.18.0 DLL
 !============================================================    
 
  Member
@@ -1281,7 +1286,12 @@ imageBPP    UNSIGNED,Auto
       Return False
     End
   End
-  pNewImage = FreeImage_RotateClassic(Self.pImage, fAngle)
+!////////////////////////////////////////////////////////////////////////////////////  
+! Modified 4-13-2020 by Charles Edmonds
+! Replaced deprecated call to FreeImage_RotateClassic with a call to FreeImage_Rotate
+!  pNewImage = FreeImage_RotateClassic(Self.pImage, fAngle)
+!////////////////////////////////////////////////////////////////////////////////////  
+  pNewImage = FreeImage_Rotate(Self.pImage, fAngle)
   Return Self.iImage.ReplaceImage(pNewImage)
 
 !--------------------------------------------------------------------------
@@ -1300,6 +1310,26 @@ pNewImage    LPFIBITMAP,Auto
   pNewImage = FreeImage_RotateEx(Self.pImage, fAngle, xShift, yShift, xOrigin, yOrigin, bUseMask)
   Return Self.iImage.ReplaceImage(pNewImage)
 
+!--------------------------------------------------------------------------
+!--------------------------------------------------------------------------
+FreeImageClass.iImage.RotateImageOnEXIFOrientation     Procedure(*iImage thisImage)
+  Code
+  Case lower(thisImage.GetMetadata(FIMD_EXIF_MAIN,'Orientation'))
+  of 'left side, bottom'
+     thisImage.Rotate(90)
+
+  of 'top, left side'
+     !don't need to do anything for this orientation
+
+  of 'bottom, right side'
+    thisImage.Flip(FI_FLIPVERT)
+
+  of 'right side, top'
+    thisImage.Rotate(-90)
+
+  end
+
+  Return
 !--------------------------------------------------------------------------
 !--------------------------------------------------------------------------
 FreeImageClass.iImage.Flip         Procedure(UNSIGNED HorzOrVert=FI_FLIPHORIZ)!,BOOL,Proc
@@ -1412,8 +1442,16 @@ longSide        Long
   scaledWidth   = nDstWidth
   scaledHeight  = nDstHeight
   
-  Case FitMethod
-  Of CFIFIT_BOTH
+  if FitMethod = CFIFIT_BEST    !Contributed by Frank O'Classen 2013.09.19 for image control resizing for consistency make it an alias for both with aspect ratio.
+     FitMethod           = CFIFIT_BOTH
+     maintainAspectRatio = True  
+     adjustPower2        = False
+  end
+  
+  
+  Case FitMethod 
+     
+  Of CFIFIT_BOTH 
     If maintainAspectRatio
       Case longSide
       Of CFI_WIDTH OrOf CFI_SQUARE                  
