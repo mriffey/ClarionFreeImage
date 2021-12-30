@@ -1,0 +1,9 @@
+-- 
+#noedit
+#system win32
+#model clarion dll
+#pragma debug(vid=>full)
+#pragma optimize(cpu=>386)
+#compile "EnumMon.clw"
+#pragma link("EnumMonAPI.lib")
+#link "EnumMon.exe"
